@@ -2,9 +2,11 @@
   <div>
     <Header></Header>
     <Book></Book>
-    <Actualites></Actualites>
-    <History></History>
-    <Artisan></Artisan>
+    <div class="container__responsive">
+      <Actualites></Actualites>
+      <History></History>
+      <Artisan></Artisan>
+    </div>
     <Footer></Footer>
   </div>
 </template>
@@ -37,6 +39,7 @@ export default {
   html {
     font-family: 'Roboto', sans-serif;
     font-size: 100%;
+    color: #1E2733;
     --color-white: #FFF;
     --color-black-01: #1E2733;
     --color-black-02: #4B525C;
@@ -50,6 +53,7 @@ export default {
 
   h2 {
     font-size: 1.125em;
+    font-weight: 500;
     color: var(--color-black-01);
     margin-bottom: 30px;
   }
@@ -60,7 +64,7 @@ export default {
   }
 
   .Background {
-    max-width: 100%;
+    width: 100%;
     height: 400px;
   }
 
@@ -68,58 +72,27 @@ export default {
     padding: 0 4%
   }
 
-  .Title__white {
-    color: white;
-    padding: 0;
-  }
+  @media (min-width: 768px) {
+    .container__responsive {
+       display: flex;
+       clear: both;
+       padding: 30px 4%;
+       justify-content: space-between;
+       margin-top: 200px;
+     }
 
-  .Actualites {
-    margin-top: 80px;
-  }
+     .container__responsive .Title {
+       padding: 0;
+     }
 
-  .Actualites__video {
-    padding: 0 4%;
-    margin-bottom: 60px;
-    border-radius: 4px;
-  }
+    .Materiaux {
+      display: none;
+    }
 
-  .Materiaux {
-    position: relative;
-    color: white;
-  }
-
-  .Materiaux__container {
-    display: flex;
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-  }
-
-  .Materiaux__left {
-    padding-top: 40px;
-    padding-left: 4%;
-  }
-
-  .Artisants {
-    margin-top: 80px;
-  }
-
-  .Artisants__personne {
-    width: 92%;
-    margin: 0 4%;
-    box-shadow: 0 2px 7px 0 rgba(30, 39, 51, 0.3);
-    border-radius: 4%;
-    display: flex;
-  }
-
-  .Artisants__description {
-    padding-right: 10px;
-  }
-
-  .Artisants__title {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    font-weight: 500;
-  }
+     .Actualites,
+     .Artisants {
+       color: var(--color-black-01);
+       width: 44%;
+     }
+   }
 </style>

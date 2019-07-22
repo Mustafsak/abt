@@ -1,22 +1,36 @@
+
 <template>
     <section class="Book">
       <h2 class="Title">Nos créations</h2>
-      <vue-glide :per-view="1.8"
-                 :gap="20"
-                 :autoplay="false"
-                 :rewind="true">
-        <vue-glide-slide v-for="image in images" :key="image.id">
-          <img :src="`${image.src}`"
-               :alt="`${image.title}`"/>
-        </vue-glide-slide>
-        <!-- <template slot="control">
-          <div class="glide__control">
-            <button class="glide__control-button"
-                    data-glide-dir="<">⬅️</button>
-            <button class="glide__control-button"
-                    data-glide-dir=">">➡️</button>
-          </div>
-        </template> -->
+      <vue-glide :gap="20"
+                 :rewind="true"
+                 :breakpoints="{
+                    768: {
+                      perView: 2,
+                      peek: { before: 14, after: 14 }
+                    },
+                    1170: {
+                      perView: 4,
+                      peek: { before: 34, after: 34 }
+                    },
+                    1800: {
+                      perView: 6,
+                      peek: { before: 54, after: 54 }
+                    }
+                  }"
+                  :peek="{ before: 14, after: 14 }"
+                  v-if="loaded">
+          <vue-glide-slide v-for="image in images"
+                           :key="image.id">
+            <img :src="image.src"
+                 :alt="image.title"/>
+          </vue-glide-slide> 
+          <template slot="control" style="margin: 40px 14px;">
+            <button class="glide__control-button glide__control-button-left"
+                    data-glide-dir="<">Précédentes</button>
+            <button class="glide__control-button glide__control-button-right"
+                    data-glide-dir=">">Suivantes</button>
+          </template>
       </vue-glide>
     </section>
 </template>
@@ -24,20 +38,33 @@
 <script>
 import { Glide, GlideSlide } from 'vue-glide-js';
 import 'vue-glide-js/dist/vue-glide.css';
-// import Book from '../../Api/book.js';
+import Book from '../../api/book';
+import Images from '../../public/assets/data/book.json';
 
 export default {
   name: 'book',
   components: {
     [Glide.name]: Glide,
-    [GlideSlide.name]: GlideSlide,
+    [GlideSlide.name]: GlideSlide
+  },
+  data () {
+    return {
+      images: [],
+      loaded: false,
+    }
   },
   methods: {
-    manageSlide() {},
+    manageBook() {
+      return new Promise((resolve, reject) => {
+        this.images = Images;
+        resolve(true)
+      });
+    }
   },
   mounted() {
-    // let book = await Book.getFromFile("./static/book.json")
-    // console.log(book)
+    this.manageBook().then(()=> {
+      this.loaded = true;
+    })
   },
 };
 </script>
@@ -48,27 +75,39 @@ export default {
     border-radius: 4px;
   }
 
-  .glide__slides .glide__slide:first-child {
-    margin-left: 14px;
-  }
-
-  .glide__control {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
+  div[data-glide-el="controls"] {
+    margin: 40px 4%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
   }
 
   .glide__control-button {
     display: block;
-    width: 30px;
-    height: 30px;
-    border: 0;
-    border-radius: 100%;
-    background: white;
-    box-shadow: 0 2px 13px 0 rgba(0,0,0,0.2);
+    border-radius: 4px;
+    padding: 15px;
+    width: 42%;
+    border: 1px solid var(--color-green-01);
+    color: var(--color-green-01);
+    font-size: 1em;
+    font-weight: 500;
+    background-color: white;
+    margin: 30px 4% 80px;
+    float: left;
+  }
+
+  .glide__control-button:focus,
+  .glide__control-button:hover{
+    background-color: var(--color-green-01);
+    color: white;
+  }
+
+  @media (min-width: 768px) {
+    .glide__control-button {
+      width: 150px;
+      margin: 30px 14px;
+    }
+    .glide__control-button-left {
+      margin-left: 4%
+    }
   }
 </style>

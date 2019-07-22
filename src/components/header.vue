@@ -17,9 +17,12 @@
         <br />Rencontrons nous pour concrétiser vos idées ✨
       </p>
     </div>
-    <img class="Header__background"
+    <picture class="Header__picture">
+      <source media="(min-width: 768px)" srcset="@/assets/header__desktop.png">
+      <img class="Header__background"
          src="@/assets/header__mobile.png"
          alt="ABT menuiserie logo"/>
+    </picture>
   </header>
 </template>
 
@@ -45,9 +48,13 @@ export default {
     margin-bottom: 20px;
   }
 
+  .Header__picture {
+    width: 100%;
+  }
+
   .Header__background {
     display: block;
-    max-width: 100%;
+    width: 100%;
   }
 
   .Header__content {
@@ -90,5 +97,20 @@ export default {
     margin-top: 15px;
     font-size: 0.875em;
     color: var(--color-black-02);
+  }
+
+  @media (min-width: 500px) {
+    .Header__instructions {
+      color: white;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .Header__content {
+      padding-top: 170px;
+    }
+    .Header__callme {
+      width: 40%;
+    }
   }
 </style>
